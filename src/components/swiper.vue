@@ -152,7 +152,8 @@ export default defineComponent({
                 left: '13%',
                 opacity: 0.4,
                 zIndex: 2,
-                transition: '.4s'
+                transition: '.4s',
+                transform: 'rotateY(120deg) translateZ(182px)'
             },
             {
                 id: 'center',
@@ -162,7 +163,7 @@ export default defineComponent({
                 top: '0px',
                 left: '50%',
                 marginLeft: '-22.5%',
-                // marginTop: '10%',
+                marginTop: '10%',
                 opacity: 1,
                 zIndex: 4,
                 transition: '.4s'
@@ -370,6 +371,10 @@ export default defineComponent({
     height: 300px;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translateZ(-282px) rotateY(0);
+    transform: translateZ(-282px) rotateY(0);
     div {
         opacity: 1;
     }

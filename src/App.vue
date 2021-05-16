@@ -1,9 +1,18 @@
 <template>
     <div id="nav" class="nav">
-        <router-view/>
+<!--        <router-view/>-->
+        <Banner></Banner>
     </div>
 </template>
-
+<script>
+import Banner from '@/components/banner'
+export default {
+    name: 'app',
+    components: {
+        Banner
+    }
+}
+</script>
 <style lang="scss">
 #nav {
     font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -101,7 +101,8 @@
         </div>
         <div class="swiper">
             <swiper></swiper>
-            <!--            <Carousel></Carousel>-->
+<!--            <Carousel></Carousel>-->
+            <Banner></Banner>
         </div>
     </div>
 </template>
@@ -110,14 +111,16 @@
 // @ is an alias to /src
 import {defineComponent, getCurrentInstance, ref, onBeforeMount} from 'vue'
 import Clipboard from 'clipboard';
-import Carousel from '../components/Carousel'
+// import Carousel from '../components/Carousel'
 import swiper from "@/components/swiper";
 import useStyle from "@/hooks/useStyle";
+import Banner from "@/components/banner";
 
 export default defineComponent({
     name: 'Home',
     components: {
-        Carousel,
+        Banner,
+        // Carousel,
         swiper
     },
     setup() {
