@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <style>
-      *{
-          margin: 0;
-          padding: 0;
-      }
-  </style>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+<noscript>
+  <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+    Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+</body>
+<script>
+		const u = navigator.userAgent
+		var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Linux") > -1;
+		var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		if (isAndroid) {
+			// alert("我是安卓");
+		}
+		if (isIOS) {
+			window.addEventListener(
+					"touchmove",
+					function(event) {
+						if (event.scale !== 1) {
+							event.preventDefault();
+						}
+					},
+					{ passive: false }
+			);
+		}
+	/*window.addEventListener(
+			"touchmove",
+			function(event) {
+				if (event.scale !== 1) {
+					event.preventDefault();
+				}
+			},
+			{ passive: false }
+	);*/
+if(/phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone/i.test(navigator.userAgent)) {
+	var oMeta = document.createElement('meta');
+	oMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0';
+	oMeta.name = 'viewport';
+	document.getElementsByTagName('head')[0].appendChild(oMeta);
+}
+</script>
 </html>

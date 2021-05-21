@@ -3,14 +3,10 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import util from './utils/util'
+import { Dialog, Toast } from 'vant';
 import { ElButton, ElSelect, ElCarousel,ElOption, ElInput, ElCheckbox, ElCarouselItem, ElIcon} from 'element-plus';
 import './assets/style/common/common.scss'
-if(util.isPhone()){
-	require('./assets/style/mobile/mobile.scss')
-}else {
-	console.log('加载了');
-	require('./assets/style/pc/pc.scss')
-}
+import './assets/fonts/font.scss'
 const Vue = createApp(App);
 Vue.component(ElButton.name, ElButton);
 Vue.component(ElSelect.name, ElSelect);
@@ -20,5 +16,7 @@ Vue.component(ElCheckbox.name, ElCheckbox);
 Vue.component(ElIcon.name, ElIcon);
 Vue.component(ElCarousel.name, ElCarousel);
 Vue.component(ElCarouselItem.name, ElCarouselItem);
+Vue.use(Dialog)
+Vue.use(Toast)
 Vue.config.globalProperties.$util = util;
 Vue.use(router).mount('#app')

@@ -1,16 +1,16 @@
 <template>
     <div id="nav" class="nav">
-<!--        <router-view/>-->
-        <Banner></Banner>
+        <router-view/>
+<!--        <Banner></Banner>-->
     </div>
 </template>
 <script>
-import Banner from '@/components/banner'
+// import Banner from '@/components/banner'
 export default {
     name: 'app',
-    components: {
+ /*   components: {
         Banner
-    }
+    }*/
 }
 </script>
 <style lang="scss">

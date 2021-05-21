@@ -11,7 +11,12 @@ module.exports = {
 					name = name.slice(3)
 					return `element-plus/packages/theme-chalk/src/${name}.scss`;
 				},
-			},
+			}
 		],
+		['import', {
+			libraryName: 'vant',
+			libraryDirectory: 'es',
+			style: true
+		}, 'vant']
 	],
 }

@@ -89,7 +89,6 @@ export default defineComponent({
     display: flex;
     position: relative;
     justify-content: center;
-    margin-top: 20vh;
     /*    div{
         img {
             width: 700px;
@@ -134,6 +133,7 @@ export default defineComponent({
         -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
+
     }
     .icon-cards__content {
         position: absolute;
