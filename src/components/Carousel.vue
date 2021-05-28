@@ -19,11 +19,11 @@ export default defineComponent({
     name: "Carousel",
     setup(){
         const imgList = ref([
-            {url: require('@/assets/images/swiper/pic1.jpg'), class: 'first'},
-            {url: require('@/assets/images/swiper/pic2.jpg'), class: ''},
-            {url: require('@/assets/images/swiper/pic3.jpg'), class: ''},
-            {url: require('@/assets/images/swiper/pic4.jpg'), class: ''},
-            {url: require('@/assets/images/swiper/pic5.jpg'), class: ''},
+            {url: require('@/assets/images/Xun/swiper/pic1.jpg'), class: 'first'},
+            {url: require('@/assets/images/Xun/swiper/pic2.jpg'), class: ''},
+            {url: require('@/assets/images/Xun/swiper/pic3.jpg'), class: ''},
+            {url: require('@/assets/images/Xun/swiper/pic4.jpg'), class: ''},
+            {url: require('@/assets/images/Xun/swiper/pic5.jpg'), class: ''},
 
         ])
         const isAni = ref(false);

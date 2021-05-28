@@ -2,14 +2,14 @@
     <section class="carousel">
         <figure class="icon-cards">
             <div :class="{'icon-cards__content': true}">
-                <div  :class="['icon-cards__item', item.rotate % 360 === 0? 'active': '']" v-for="(item,index) in imgList" :key="index" :style="{ '-webkit-transform': `rotateY(${item.rotate}deg) translateZ(182px)`, transform: `rotateY(${item.rotate}deg) translateZ(182px);`}">
-                    <img :style="{'width': '100%'}" :src="item.url" alt="" >
+                <div  :class="['icon-cards__item', item.rotate % 360 === 0? 'active': '']" v-for="(item,index) in imgList" :key="index" :style="{ '-webkit-transform': `rotateY(${item.rotate}deg) translateZ(122px)`, transform: `rotateY(${item.rotate}deg) translateZ(122px);`}">
+                    <img  :src="item.url" alt="" >
                     <div v-if="item.rotate % 360 !== 0" class="mark">
                     </div>
                 </div>
             </div>
-            <img class="left" src="@/assets/images/swiper/btn_pre.png" alt="" @click="prev">
-            <img class="right" src="@/assets/images/swiper/btn_next.png" alt=""  @click="next">
+            <img class="left" src="@/assets/images/Xun/swiper/btn_pre.png" alt="" @click="prev">
+            <img class="right" src="@/assets/images/Xun/swiper/btn_next.png" alt=""  @click="next">
         </figure>
         <div class="card-point">
             <div :class="{point: !item.active, active: item.active}" v-for="(item, point_index) in imgList" :key="point_index"></div>
@@ -23,9 +23,9 @@ export default defineComponent({
     name: "banner",
     setup(){
         const imgList = ref([
-            {url: require('@/assets/images/swiper/pic1.jpg'), active: true, rotate: 0},
-            {url: require('@/assets/images/swiper/pic2.jpg'), active: false, rotate: 120},
-            {url: require('@/assets/images/swiper/pic3.jpg'), active: false, rotate: 240},
+            {url: require('@/assets/images/Xun/swiper/pic1.jpg'), active: true, rotate: 0},
+            {url: require('@/assets/images/Xun/swiper/pic2.jpg'), active: false, rotate: 120},
+            {url: require('@/assets/images/Xun/swiper/pic3.jpg'), active: false, rotate: 240},
 
             /*   {url: require('@/assets/images/swiper/pic1.jpg'), active: true, rotate: 120},
                {url: require('@/assets/images/swiper/pic2.jpg'), active: false, rotate: 240},
@@ -35,8 +35,8 @@ export default defineComponent({
                {url: require('@/assets/images/swiper/pic2.jpg'), active: false, rotate: 360},
                {url: require('@/assets/images/swiper/pic3.jpg'), active: false, rotate: 720},*/
 
-            {url: require('@/assets/images/swiper/pic4.jpg'), active: false, rotate: 360},
-            {url: require('@/assets/images/swiper/pic5.jpg'), active: false, rotate: 360},
+            {url: require('@/assets/images/Xun/swiper/pic4.jpg'), active: false, rotate: 360},
+            {url: require('@/assets/images/Xun/swiper/pic5.jpg'), active: false, rotate: 360},
         ])
         // const
         const isAni = ref(false);
@@ -52,19 +52,19 @@ export default defineComponent({
                 val.active = false;
             })
             imgList.value[activeIndex.value].active = true;
-            let flag = ''
-            imgList.value.forEach((val, index) => {
-                if ([0,1,2].includes(index) && val.rotate % 360 !== 0) {
-                    flag = index;
-                }
-            })
-            if (flag !== ''){
-                imgList.value[3] = imgList.value.splice(flag, 1, imgList.value[3])[0]
-                imgList.value[3].rotate = imgList.value[flag].rotate;
-                imgList.value.splice(flag, 0, imgList.value[3]);
-                imgList.value.push(imgList.value[flag]);
-                imgList.value.splice(flag, 1);
-            }
+            // let flag = ''
+            // imgList.value.forEach((val, index) => {
+            //     if ([0,1,2].includes(index) && val.rotate % 360 !== 0) {
+            //         flag = index;
+            //     }
+            // })
+            // if (flag !== ''){
+            //     imgList.value[3] = imgList.value.splice(flag, 1, imgList.value[3])[0]
+            //     imgList.value[3].rotate = imgList.value[flag].rotate;
+            //     imgList.value.splice(flag, 0, imgList.value[3]);
+            //     imgList.value.push(imgList.value[flag]);
+            //     imgList.value.splice(flag, 1);
+            // }
             /*            imgList.value.unshift(imgList.value[activeIndex.value]);
                         imgList.value.splice(activeIndex.value + 1, 1);*/
             // imgList.value.forEach((val,index) => {
@@ -119,8 +119,8 @@ export default defineComponent({
         left: 50%;
         width: pxtovw(600);
         height: pxtovw(200);
-        -webkit-perspective: pxtovw(400);
-        perspective: pxtovw(400);
+        -webkit-perspective: pxtovw(1200);
+        perspective: pxtovw(1200);
         -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
@@ -138,38 +138,42 @@ export default defineComponent({
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 104%;
             height: 100%;
             border-radius: 6px;
             transition: 0.6s;
-
+            img {
+                width: 104%;
+                height: pxtovw(283);
+            }
         }
         .icon-cards__item:nth-child(4), .icon-cards__item:nth-child(5){
             display: none;
         }
         .mark {
             background: rgba(231,246,214,0.7);
-            width: 100%;
-            height: pxtovw(320);
+            width: 104%;
+            height: pxtovw(283);
             position: absolute;
-            top: 0
+            top: 0;
+            z-index: 2;
         }
         .left {
+            width: pxtovw(80);
             position: absolute;
-            top: pxtovw(100);
-            left: pxtovw(-100);
-            opacity: 0;
+            top: pxtovw(200);
+            left: pxtovw(-60);
         }
         .right {
+            width: pxtovw(80);
             position: absolute;
-            top: pxtovw(100);
-            right: pxtovw(-100);
-            opacity: 0;
+            top: pxtovw(200);
+            right: pxtovw(-60);
         }
         .active{
             box-sizing: border-box;
             margin-top: pxtovw(100);
-            padding: 0 70px;
+            padding: 0 pxtovw(70);
         }
     }
     .card-point {

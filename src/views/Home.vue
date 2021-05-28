@@ -6,9 +6,9 @@
 <script>
 // @ is an alias to /src
 
-import {defineComponent, getCurrentInstance, onBeforeMount, ref} from 'vue'
-import pc from '@/components/Pc'
-import mobile from "@/components/mobile";
+import {defineComponent, getCurrentInstance, onBeforeMount, onMounted, ref} from 'vue'
+import pc from '@/components/XPc'
+import mobile from "@/components/XMobile";
 export default defineComponent({
     name: 'Home',
     components: {
@@ -17,14 +17,11 @@ export default defineComponent({
     },
     setup(){
         const {proxy} = getCurrentInstance();
-        
         const isPhone = ref(false);
-
+        document.title = '驯龙物语';
         onBeforeMount(() => {
             isPhone.value = proxy.$util.isPhone();
-            console.log(isPhone.value);
         })
-
         return {
             isPhone
         }

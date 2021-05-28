@@ -7,6 +7,9 @@ import { Dialog, Toast } from 'vant';
 import { ElButton, ElSelect, ElCarousel,ElOption, ElInput, ElCheckbox, ElCarouselItem, ElIcon} from 'element-plus';
 import './assets/style/common/common.scss'
 import './assets/fonts/font.scss'
+import server from './server/index'
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
 const Vue = createApp(App);
 Vue.component(ElButton.name, ElButton);
 Vue.component(ElSelect.name, ElSelect);
@@ -19,4 +22,6 @@ Vue.component(ElCarouselItem.name, ElCarouselItem);
 Vue.use(Dialog)
 Vue.use(Toast)
 Vue.config.globalProperties.$util = util;
+Vue.config.globalProperties.$http = server;
+Vue.config.globalProperties.$video = Video;
 Vue.use(router).mount('#app')

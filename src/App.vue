@@ -1,16 +1,13 @@
 <template>
     <div id="nav" class="nav">
-        <router-view/>
-<!--        <Banner></Banner>-->
+        <div id="fb-root">
+            <router-view/>
+        </div>
     </div>
 </template>
 <script>
-// import Banner from '@/components/banner'
 export default {
     name: 'app',
- /*   components: {
-        Banner
-    }*/
 }
 </script>
 <style lang="scss">

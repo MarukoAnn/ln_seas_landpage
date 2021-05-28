@@ -1,0 +1,1176 @@
+<template>
+    <div class="home" :style="pcHomeBgc">
+        <!--  右边的挂件按钮  -->
+        <div class="home-body">
+            <div class="left-button">
+                <img src="@/assets/images/Xun/basic/button_float.png" alt="">
+                <div class="mark">
+                    <a href="https://apps.apple.com/tw/app/id1489271479">123</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.gamebeans.gog">456</a>
+                    <a>789</a>
+                    <a @click="isShowDialog = true;isShowPopType = 'gift'"></a>
+                    <div @click="nextToTopClick"></div>
+                </div>
+
+            </div>
+            <!--  头部预约     -->
+            <div class="header">
+                <div class="img-box">
+                    <img src="@/assets/images/Xun/basic/button_play.png" alt="">
+                    <img src="@/assets/images/Xun/basic/title2.png" alt="">
+                </div>
+                <div  class="yu-button" :style="yButtonBgc" @click="nextToRever">
+                    <strong>123512人已加入勇者團</strong>
+                </div>
+                <!--            <img src="@/assets/images/Xun/basic/button_preorder1.png" alt="">-->
+            </div>
+            <!--  第一部分  -->
+            <div class="tip-one">
+                <div class="to-title">
+                    <img src="@/assets/images/Xun/basic/tip1.png" alt="">
+                </div>
+                <div class="tip-body">
+                    <!--  背景图片-->
+                    <img class="tb-bgc" src="@/assets/images/Xun/basic/step1-copy.png" alt="">
+                    <div class="tb-bx">
+                        <img src="@/assets/images/Xun/basic/bx.png" alt="">
+                    </div>
+                    <!--  填写手机号码-->
+                    <div class="input-info">
+                        <!-- 选择手机号-->
+                        <div class="num-title" :style="tipInputBgc">
+                            <el-select v-model="numId" placeholder="请选择" @change="phoneChange">
+                                <el-option :label="`${item.label}+${item.flag}`" :value="item.value" v-for="(item, index) in phoneList" :key="index"></el-option>
+                            </el-select>
+                        </div>
+                        <!-- 输入手机号 -->
+                        <div class="num-input" :style="tipInputBgc">
+                            <el-input v-model="phoneNumber" :class="{'active-Hk': ['香港'].includes(numId), 'active-XJP': numId === '新加坡'}" :placeholder="inputPlacholder"></el-input>
+                        </div>
+                    </div>
+                    <!-- 同意资料-->
+                    <div class="agree">
+                        <!--                    <el-checkbox v-model="agree"></el-checkbox>-->
+                        <div class="check" @click="agree = !agree">
+                            <div :class="{'inner-check': true, 'is_checkd': agree}"></div>
+                        </div>
+                        <span>同意個人資料的收集使用及接收短信資訊</span>
+                    </div>
+                    <div id="reserver" class="reserve-btn" @click="showPopClick">
+                        <img src="@/assets/images/Xun/basic/reserve-btn.png" alt="">
+                    </div>
+                </div>
+                <div class="share-panel">
+                    <div class="share-content">
+                        <div class="like-box">
+                            <img src="@/assets/images/Xun/basic/step2.png" alt="">
+                            <div class="like-btn">
+<!--                                <img class="like-icon" src="@/assets/images/Xun/basic/like.png" alt="">
+                                <span class="like-span">贊3.2萬</span>-->
+                                <div class="fb-like"
+                                     data-href="https://f1.leniuhw.com/recover/index.html"
+                                     data-width="175px"
+                                     data-layout="button_count"
+                                     data-action="like"
+                                     data-size="large"
+                                     style="width: 100%;height: 100%"
+                                     data-share="false"></div>
+<!--                                <div class="fb-like"
+                                     data-href="https://developers.facebook.com/docs/plugins/"
+                                     data-width=""
+                                     data-layout="standard"
+                                     data-action="like"
+                                     data-size="small"
+                                     data-share="false"></div>-->
+                            </div>
+                        </div>
+                        <div class="share-box">
+                            <img src="@/assets/images/Xun/basic/step3.png" alt="">
+                            <div class="share-btn" @click="onFBLogin">
+                                <img src="@/assets/images/Xun/basic/fb_share_btn.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="share-tips">完成相關活動後，請點擊頁面右方“獎勵查詢”查詢相關禮包兌換碼。</span>
+                </div>
+            </div>
+            <!--  第二部分 -->
+            <div class="tip-two">
+                <div class="tt-title">
+                    <img src="@/assets/images/Xun/basic/tip2.png" alt="">
+                </div>
+                <div class="tt-progress">
+                    <div class="tp-num">
+                        <span>前預約人數<strong>{{ configData.numbers }}</strong> </span>
+                    </div>
+                    <div class="tp-gress">
+                        <div class="tp-icon">
+                            <img :style="{'margin-left': item.left}"
+                                 v-for="(item, index) in progressList" :key="index"
+                                 :src="(index + 1) % 2 === 1? require('@/assets/images/Xun/basic/ic_bar.png'): require('@/assets/images/Xun/basic/bar_right.png')"
+                                 alt="">
+                        </div>
+                        <img class="tp-gressbgc" src="@/assets/images/Xun/basic/bg_bar_copy.png" alt="">
+                    </div>
+                    <div class="tp-shop">
+                        <div class="shop-left">
+                            <img src="@/assets/images/Xun/shop/shop_logo.png" alt="">
+                        </div>
+                        <div class="shop-right">
+                            <div class="shop-one">
+                                <img class="img-one" src="@/assets/images/Xun/shop/shop_one.png" alt="">
+                                <img class="img-two" src="@/assets/images/Xun/shop/shop_three.png" alt="">
+                                <div class="actvie">
+                                    <img src="@/assets/images/Xun/shop/active.png" alt="" v-if="configData.numbers / 10000 >= 2">
+                                    <img src="@/assets/images/Xun/shop/active.png" alt="" v-if="configData.numbers / 10000 >= 20">
+                                </div>
+                            </div>
+                            <div class="shop-two">
+                                <img src="@/assets/images/Xun/shop/shop_two.png" alt="">
+                                <img class="img-two" src="@/assets/images/Xun/shop/shop_four.png" alt="">
+                                <div class="actvie">
+                                    <img src="@/assets/images/Xun/shop/active.png" alt="" v-if="configData.numbers / 10000 >= 10">
+                                    <img src="@/assets/images/Xun/shop/active.png" alt="" v-if="configData.numbers / 10000 >= 30">
+                                </div>
+                            </div>
+                            <div class="shop-three">
+                                <img class="img-big" src="@/assets/images/Xun/shop/shop_big.png" alt="">
+                                <div class="active">
+                                    <img src="@/assets/images/Xun/shop/active.png" alt="" v-if="configData.numbers / 10000 >= 40">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  第三部分   -->
+            <div class="tip-three">
+                <div class="te-title">
+                    <img src="@/assets/images/Xun/basic/tip3.png" alt="">
+                </div>
+                <div class="te-body">
+                    <div class="tb-show">
+                        <img src="@/assets/images/Xun/role/role_bgc.png" alt="">
+                        <img class="role-info" :src="roleImgUrl" alt="">
+                        <div class="role-sex">
+                            <div v-if="roleSex === 1">
+                                <div class="rs-mark mark-right " @click="roleSexClick"></div>
+                                <img src="@/assets/images/Xun/role/btn_man.png" alt="">
+                            </div>
+                            <div v-else>
+                                <div class="rs-mark mark-left" @click="roleSexClick"></div>
+                                <img src="@/assets/images/Xun/role/btn_wuman.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tb-tab">
+                        <div class="left">
+                            <img src="@/assets/images/Xun/role/btn_left.png" alt="" @click="prevShowRoleClick">
+                        </div>
+                        <div class="conter">
+                            <img v-for="(item, index) in roleImgList" :class="{'no-active': !item.active}" :key="index"
+                                 :src="item.active? (roleSex === 1?  item.manIconImageUrl: item.wumanIconImageUrl): item.manIconImageUrl"
+                                 alt="" @click="showRoleInfoClick(item, index)">
+                        </div>
+                        <div class="right">
+                            <img src="@/assets/images/Xun/role/btn_right.png" alt="" @click="nextShowRoleClick">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  第四部分   -->
+            <div class="tip-four">
+                <div class="tf-title">
+                    <img src="@/assets/images/Xun/basic/tip4.png" alt="">
+                </div>
+                <div class="tf-body">
+                    <Banner></Banner>
+                </div>
+            </div>
+            <!--  底部 -->
+            <footer class="footer">
+                <div class="footer-body">
+                    <div class="footer-title">
+                        活動說明：
+                    </div>
+                    <p>1.活動截止至遊戲上線前，具體上線時間請關註官方粉絲頁</p>
+                    <p>2.一個手機號碼只能申請一次事前登錄，請確保手機號碼填寫</p>
+                    <p>3.預約成功後，可以通過“獎勵查詢”查看已獲得的禮包兌換碼，開服後請自行前往遊戲內進行兌換，每個類型禮包僅限兌換一次；</p>
+                    <p>4.預約人數達成禮包將在開服後7個工作日內發放全服；</p>
+                    <p>5.如果使用不正當手段參與事前登錄獲取活動獎勵，官方將有權取消該用戶獲取的獎勵資格；</p>
+                    <p>6.本公司保留變更或終止本活動之權利；</p>
+                    <div class="compony-info">
+                        <img class="ci-logo" src="@/assets/images/Xun/basic/erniu_logo.png" alt="">
+                        <div class="ci-sub">
+                            <img src="@/assets/images/Xun/basic/label.jpg" alt="">
+                            <div class="ci-text">
+                                <span>本遊戲涉及性（角色穿著凸顯性特征之服飾）、暴力、打鬥、虛擬戀愛或結婚情節。</span>
+                                <span>遊戲故事純屬虛構，請註意使用時間，避免沈迷於遊戲或不當模仿。</span>
+                                <span>遊戲為免責使用，部分內容需另行支付費用，勿用他人代儲以免觸法。</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="ft-end">Copyright© 2021 Erniu Information Technology Co., Ltd. All righ</p>
+
+                </div>
+            </footer>
+        </div>
+        <!-- 预约成功的弹窗  -->
+        <transition name="bounce">
+            <div class="cl-dialog" v-if="isShowDialog">
+                <div class="cd-content">
+                    <div class="img-content" v-if="isShowPopType === 'success'">
+                        <div class="ic-box">
+                            <img src="@/assets/images/Xun/basic/pop_dialog.png" alt="">
+                            <img class="close-btn" @click="isShowDialog = false"
+                                 src="@/assets/images/Xun/basic/button_close.png" alt="">
+                        </div>
+                        <div class="ic-role">
+                            <img src="@/assets/images/Xun/basic/pop_role.png" alt="">
+                        </div>
+                    </div>
+                    <div class="gift-content" v-else>
+                        <div class="gc-body" :style="giftStyleConfig.giftBgc">
+                            <div class="gc-title">
+                                <div class="gt-left" :style="giftStyleConfig.giftLeftBtnBgc">
+                                    <span>獎品名</span>
+                                </div>
+                                <div class="gt-right" :style="giftStyleConfig.giftRightBtnBgc">
+                                    <span>禮包兌換碼</span>
+                                </div>
+                            </div>
+                            <div class="gc-list">
+                                <div class="gc-item" v-for="(gift, index) in giftList" :key="index">
+                                    <div class="gt-left" :style="giftStyleConfig.giftLeftBtnBgc">
+                                        <span>{{ gift.label }}</span>
+                                    </div>
+                                    <div class="gt-right" :style="giftStyleConfig.giftRightBtnBgc">
+                                        <span>{{ gift.code }}</span>
+                                        <button class="copy-btn tag-read" @click="copy" :data-clipboard-text="gift.code">
+                                            复制
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="close-btn" @click="isShowDialog = false"
+                             src="@/assets/images/Xun/basic/button_close.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </div>
+</template>
+
+<script>
+import {defineComponent, ref, onBeforeMount, onMounted, getCurrentInstance} from 'vue'
+import useStyle from "@/hooks/useStyle";
+import Banner from "@/components/XBanner";
+import useCommon from "@/hooks/useCommon";
+import usrFacebook from "@/hooks/useFacebook"
+import useRequest from "@/hooks/useRequest";
+export default defineComponent({
+    name: "Pc",
+    components: {
+        Banner,
+        // Carousel,
+        // swiper
+    },
+    setup() {
+        /* 获取样式 */
+        const {giftStyleConfig, pcHomeBgc, yButtonBgc, logoBgc, tipInputBgc} = useStyle();
+        const {phoneList, roleImgList, copy, nextToTopClick} = useCommon();
+        const {onFBLogin} = usrFacebook();
+        const {configData} = useRequest();
+        const {proxy} = getCurrentInstance();
+        const progressList = ref([
+            {left: '-2px', transfrom: 'rotate(0deg)'},
+            {left: '-20px', transfrom: 'rotate(180deg)'},
+            {left: '-22px', transfrom: 'rotate(0deg)'},
+            {left: '-20px', transfrom: 'rotate(180deg)'},
+            {left: '-22px', transfrom: 'rotate(0deg)'},
+            {left: '-20px', transfrom: 'rotate(0deg)'},
+            {left: '-22px', transfrom: 'rotate(0deg)'},
+        ])
+        const text = ref('123')
+        const numId = ref('');
+        const inputPlacholder = ref('');
+        const phoneNumber = ref('');
+        // 是否同意
+        const agree = ref(false);
+        // 角色展示信息
+        const roleImgUrl = ref('');
+        // 1 表示男  2表示女
+        const roleSex = ref(1)
+        // 当前激活Index
+        const roleActiveIndex = ref(0)
+        // 弹窗显示
+        const isShowDialog = ref(false)
+        // 弹窗显示类型  success 预约成功  gift 礼包
+        const isShowPopType = ref('gift');
+        // 礼包码列表
+        const giftList = ref([
+            {label: '預約禮包', code: 'VIP666'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+            {label: '預約禮包', code: 'VIP888'},
+        ])
+        const roleSexClick = () => {
+            roleSex.value = roleSex.value === 1 ? roleSex.value = 2 : roleSex.value = 1;
+            roleImgList.value.forEach(val => {
+                if (val.active) {
+                    roleImgUrl.value = roleSex.value === 1 ? val.manImageUrl : val.womanImageUrl;
+                }
+            })
+        }
+        const prevShowRoleClick = () => {
+            if (roleActiveIndex.value > 0) {
+                roleActiveIndex.value -= 1;
+            } else {
+                roleActiveIndex.value = roleImgList.value.length - 1;
+            }
+            roleImgList.value.forEach(val => {
+                val.active = false;
+            })
+            roleImgList.value[roleActiveIndex.value].active = true;
+            roleImgUrl.value = roleSex.value === 1 ? roleImgList.value[roleActiveIndex.value].manImageUrl : roleImgList.value[roleActiveIndex.value].womanImageUrl;
+        }
+        const showRoleInfoClick = (item, index) => {
+            roleImgList.value.forEach(val => {
+                val.active = false;
+            })
+            roleActiveIndex.value = index;
+            item.active = true;
+            roleImgUrl.value = roleSex.value === 1 ? item.manImageUrl : item.womanImageUrl;
+
+        }
+        const showPopClick = () => {
+            if (agree.value){
+                isShowDialog.value = true;
+                isShowPopType.value = 'success'
+            }else {
+                proxy.$toast('请先同意协议');
+            }
+
+        }
+        const nextToRever = () => {
+            let setTimer = setInterval(() => {
+                if (document.getElementById('nav').scrollTop + 5 < 750 ) {
+                    document.getElementById('nav').scrollTop += 5;
+                } else {
+                    document.getElementById('nav').scrollTop = 750;
+                }
+                if (document.getElementById('nav').scrollTop === 750) {
+                    clearInterval(setTimer)
+                }
+            })
+
+        }
+        // 手机号切换
+        const phoneChange = (val) => {
+            console.log(val);
+            phoneList.value.forEach(res => {
+                if (res.value === val){
+                    inputPlacholder.value = res.placholder
+                }
+            })
+        }
+        // 下一个
+        const nextShowRoleClick = () => {
+            if (roleActiveIndex.value < roleImgList.value.length - 1) {
+                roleActiveIndex.value += 1;
+            } else {
+                roleActiveIndex.value = 0;
+            }
+            roleImgList.value.forEach(val => {
+                val.active = false;
+            })
+            roleImgList.value[roleActiveIndex.value].active = true;
+            roleImgUrl.value = roleSex.value === 1 ? roleImgList.value[roleActiveIndex.value].manImageUrl : roleImgList.value[roleActiveIndex.value].womanImageUrl;
+        }
+        onBeforeMount(() => {
+            roleImgList.value.forEach(val => {
+                if (val.active) {
+                    roleImgUrl.value = roleSex.value === 1 ? val.manImageUrl : val.womanImageUrl;
+                }
+            })
+            inputPlacholder.value = phoneList.value[0].placholder;
+            numId.value = phoneList.value[0].value;
+        })
+        onMounted(() => {
+            console.log(phoneList.value);
+            console.log(configData);
+
+           /* console.log(document.getElementsByTagName('iframe'));*/
+        })
+        return {
+            logoBgc,
+            yButtonBgc,
+            tipInputBgc,
+            pcHomeBgc,
+            numId,
+            configData,
+            agree,
+            progressList,
+            text,
+            roleImgUrl,
+            roleSex,
+            roleImgList,
+            isShowDialog,
+            isShowPopType,
+            giftStyleConfig,
+            giftList,
+            phoneList,
+            inputPlacholder,
+            phoneNumber,
+            showPopClick,
+            nextToRever,
+            phoneChange,
+            copy,
+            roleSexClick,
+            showRoleInfoClick,
+            nextShowRoleClick,
+            prevShowRoleClick,
+            onFBLogin,
+            nextToTopClick
+        }
+    }
+})
+</script>
+
+<style scoped lang="scss">
+.home {
+    height: 5564px;
+    //background: url("../../images/bgc.jpg") no-repeat center;
+    padding: 1px 0;
+    .home-body {
+        position: relative;
+        padding: 1px 0;
+        .left-button {
+            position: fixed;
+            top: 100px;
+            right: 16px;
+            z-index: 10;
+            .mark {
+                height: 395px;
+                position: absolute;
+                right: 10px;
+                width: 300px;
+                margin-top: -400px;
+                z-index: 11;
+                text-align: center;
+                opacity: 0;
+                a {
+                    display: flex;
+                    text-align: center;
+                    background: #42b983;
+                    width: 100%;
+                    height: 70px;
+                    margin-top: 4px;
+                    border-radius: 40px;
+                }
+                div{
+                    margin-top: 12px;
+                    background: #42b983;
+                    width: 100px;
+                    height: 80px;
+                    margin-left: 32%;
+                    border-radius: 20px;
+                }
+            }
+            img {
+                height: 795px;
+            }
+        }
+        .header {
+            display: flex;
+            margin-top: 582px;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            .img-box {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                img:first-child {
+                    position: absolute;
+                    right: 118px;
+                    margin-top: 14px;
+                    z-index: 22;
+                    animation: anima-scale 2s;
+                    animation-iteration-count: infinite;
+                }
+                img:nth-child(2) {
+                    z-index: 0;
+                }
+            }
+            .yu-button{
+                margin-top: 23px;
+                height: 140px;
+                width: 464px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+                animation: anima-scale 2s;
+                animation-iteration-count: infinite;
+                strong {
+                    margin-bottom: 16px;
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    margin-right: 42px;
+                    font-style: italic;
+                    color: #fff;
+                    -webkit-text-stroke: 1.4px #C14610;
+                    text-shadow:  3px 3px 2px #9A6015;
+                    letter-spacing: -0.1em;
+                    font-family: mySecondFont;
+                }
+            }
+        }
+        .tip-one{
+            margin-top: 74px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            overflow-x: clip;
+            .to-title {
+                width: 1200px;
+                text-align: left;
+                img{
+                    width: 624px;
+                }
+            }
+            .tip-body {
+                position: relative;
+                width: 1200px;
+                height: 420px;
+                .tb-bx {
+                    position: absolute;
+                    right: -128px;
+                    width: 286px;
+                    height: 286px;
+                    top: 50px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                img {
+                    width: 1138px;
+                    height: 420px;
+                    position: absolute;
+                    left: 0;
+                }
+                .input-info {
+                    display: flex;
+                    width: 482px;
+                    left: 38px;
+                    top: 140px;
+                    padding: 2px 0;
+                    position: absolute;
+                    font-family: mySecondFont;
+                    :deep(.el-input__suffix) {
+                        top: 9px;
+                        right: 12px;
+                        font-size: 24px;
+                    }
+                    .num-title {
+                        :deep(.el-select .el-input) {
+                            width: 200px;
+                            height: 66px;
+                        }
+                        :deep(.el-input__inner) {
+                            border: 0;
+                            background-color: rgba(0, 0, 0, 0);
+                            height: 66px;
+                            font-size: 24px;
+                            line-height: 66px;
+                            letter-spacing: 0.02em;
+                        }
+                        :deep(.el-input__suffix-inner){
+                            color: #000;
+                        }
+                        :deep(.el-icon-arrow-up:before) {
+                            content: "";
+                            color: #000;
+                            font-size: 24px;
+                        }
+                    }
+                    .num-input {
+                        margin-left: 12px;
+                        width: 270px;
+                        height: 66px;
+                        :deep(.el-input) {
+                            font-size: 24px;
+                            width: 270px;
+                            height: 66px;
+                            line-height: 66px;
+                        }
+                        :deep(.el-input__inner) {
+                            border: 0;
+                            background-color: rgba(0, 0, 0, 0);
+                            height: 66px;
+                            //margin-left: 8px;
+                            letter-spacing: 0.12em;
+                        }
+                        .active-Hk{
+                            :deep(.el-input__inner::placeholder){
+                                font-size: 12px;
+                            }
+                        }
+                        .active-XJP{
+                            :deep(.el-input__inner::placeholder){
+                                font-size: 18px;
+                            }
+                        }
+                    }
+
+                    /*.el-select .el-input__inner {
+                      margin-right: 0;
+                    }*/
+                }
+                .agree {
+                    position: absolute;
+                    bottom: 172px;
+                    left: 132px;
+                    display: flex;
+                    align-items: center;
+                    .check {
+                        width: 22px;
+                        height: 22px;
+                        box-sizing: border-box;
+                        border: 2px solid #F5BF9E;
+                        border-radius: 4px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-right: 12px;
+                        .inner-check{
+                            width: 16px;
+                            height: 16px;
+                        }
+                        .is_checkd {
+                            background: #F5BF9E;
+                        }
+                    }
+                    span {
+                        font-size: 18px;
+                        color: #4F4F3B;
+                        font-family: myFirstFont;
+                        font-weight: 540;
+                    }
+                }
+                .reserve-btn {
+                    position: absolute;
+                    bottom: 136px;
+                    left: 58px;
+                    animation: anima-scale 2s;
+                    animation-iteration-count: infinite;
+                    display: flex;
+                    justify-content: center;
+                    width: 400px;
+                    img {
+                        width: 430px;
+                        height: 66px;
+                    }
+                    &:active{
+                        transform: scale(0.95,0.95)
+                    }
+                }
+            }
+            .share-panel {
+                margin-top: 34px;
+                width: 1200px;
+                height: 324px;
+                padding-right: 62px;
+                box-sizing: border-box;
+                .share-content {
+                    display: flex;
+                    .like-box, .share-box{
+                        position: relative;
+                        img {
+                            height: 282px;
+                            width: 539px;
+                        }
+                    }
+                    .like-box {
+                        text-align: center;
+                        .like-btn {
+                            //background: #1086FF;
+                            position: absolute;
+                            width: 175px;
+                            height: 54px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 6px;
+                            left: 180px;
+                            top: 95px;
+                            /*    /deep/ .fb-like {
+                                  opacity: 1;
+                                  span {
+                                    width: 100% !important;
+                                    height: 100% !important;
+                                  }
+                                  iframe{
+                                    width: 100% !important;
+                                    height: 100% !important;
+                                    /deep/ .svg > body.plugin, ._2tga._8j9w {
+                                      width: 175px !important;
+                                      height: 54px !important;
+                                    }
+                                  }
+                                }
+                                /deep/ .fb-like ._89n_ {
+                                  background: #1086FF;
+                                }*/
+                            .like-icon {
+                                width: 32px;
+                                height: 32px;
+                                margin-right: 18px;
+                                margin-left: 21px;
+                            }
+                            .like-span {
+                                color: #fff;
+                                font-weight: 600;
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                    .share-box {
+                        .share-btn {
+                            position: absolute;
+                            left: 102px;
+                            top: 95px;
+                            img {
+                                width: 346px;
+                                height: 54px;
+                            }
+                            &:active{
+                                transform: scale(0.95,0.95)
+                            }
+                        }
+                    }
+                    .share-box {
+                        margin-left: 60px;
+                    }
+                }
+                .share-tips {
+                    margin-top: 20px;
+                    font-size: 20px;
+                    letter-spacing: 0.1rem;
+                    color: #31311B;
+                    float: right;
+                    font-family: mySecondFont;
+                }
+
+            }
+        }
+        .tip-two {
+            margin-top: 40px;
+            width: 100%;
+            height: 1025px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: clip;
+            .tt-title {
+                width: 1200px;
+                text-align: left;
+            }
+            .tt-progress {
+                width: 1200px;
+                .tp-num {
+                    text-align: right;
+                    margin-right: 12px;
+                    span {
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #87610F;
+                        strong {
+                            margin-bottom: 16px;
+                            font-size: 2.8rem;
+                            color: #93F259;
+                            -webkit-text-stroke: 1px #87610F;
+                            text-shadow:  1px 1px 2px #FBF270;
+                            letter-spacing: -0.05em;
+                            font-family: myThreeFont;
+                        }
+                    }
+                }
+                .tp-gress {
+                    width: 100%;
+                    position: relative;
+                    .tp-icon {
+                        position: absolute;
+                        top: 5px;
+                        left: 3px;
+                        z-index: 3;
+                        img {
+                            width: 60px;
+                            height: 50px;
+                        }
+                    }
+                    .tp-gressbgc {
+                        position: absolute;
+                        left: 0;
+                        z-index: 2;
+                    }
+                }
+                .tp-shop {
+                    position: relative;
+                    display: flex;
+                    .shop-left {
+                        position: absolute;
+                        top: -50px;
+                        left: -300px;
+                        z-index: 1;
+                    }
+                    .shop-right {
+                        position: absolute;
+                        right: 40px;
+                        top: 134px;
+                        z-index: 0;
+                        display: flex;
+                        .shop-one, .shop-two{
+                            width: 250px;
+                            height: 690px;
+                            margin: 0 10px;
+                            position: relative;
+                            .img-two {
+                                margin-top: 20px;
+                            }
+                            .actvie {
+                                img:first-child {
+                                    position: absolute;
+                                    top: 46px;
+                                    right: -25px;
+                                    z-index: 5;
+                                }
+                                img:last-child {
+                                    position: absolute;
+                                    top: 410px;
+                                    right: -40px;
+                                    z-index: 5;
+                                }
+                            }
+                        }
+                        .shop-three {
+                            margin: 0 10px;
+                            position: relative;
+                            width: 290px;
+                            height: 690px;
+                            .img-big {
+                                width: 290px;
+                                height: 690px;
+                            }
+                            .active {
+                                position: absolute;
+                                top: 54px;
+                                right: -25px;
+                                z-index: 5;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        .tip-three {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .te-title {
+                width: 1200px;
+                text-align: left;
+            }
+            .te-body {
+                width: 1200px;
+                text-align: center;
+                .tb-show {
+                    position: relative;
+                    margin-top: -60px;
+                    .role-info {
+                        position: absolute;
+                        left: 0;
+                        top: -40px;
+                    }
+                    .role-sex {
+                        position: absolute;
+                        right: 140px;
+                        top: 120px;
+                        .rs-mark {
+                            width: 73px;
+                            height: 40px;
+                            position: absolute;
+                        }
+                        .mark-left {
+                            left: 4px
+                        }
+                        .mark-right {
+                            right: 4px
+                        }
+                    }
+                }
+                .tb-tab {
+                    display: flex;
+                    align-items: center;
+                    .left {
+                        margin-left: 40px;
+                    }
+                    .left, .right {
+                        img {
+                            width: 50px;
+                        }
+                    }
+                    .conter {
+                        flex: 1;
+                        display: flex;
+                        justify-content: space-around;
+                        img {
+                            width: 135px;
+                        }
+                    }
+                    .no-active {
+                        -webkit-filter: grayscale(100%);
+                        -moz-filter: grayscale(100%);
+                        -ms-filter: grayscale(100%);
+                        -o-filter: grayscale(100%);
+                        filter: grayscale(100%);
+                        filter: gray;
+                    }
+                }
+            }
+        }
+        .tip-four{
+            margin-top: 120px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 880px;
+            .tf-title {
+                width: 1200px;
+                text-align: left;
+            }
+            .tf-body {
+                width: 1200px;
+                padding-left: 300px;
+                padding-top: 124px;
+                box-sizing: border-box;
+            }
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            .footer-body {
+                text-align: left;
+                padding-left: 182px;
+                width: 1200px;
+                .footer-title {
+                    font-size: 30px;
+                    color: #fff;
+                    font-family: mySecondFont;
+                    margin-bottom: 24px;
+                }
+                p {
+                    color: #FFF;
+                    margin-bottom: 15px;
+                    font-size: 20px;
+                    font-family: mySecondFont;
+                }
+                .compony-info {
+                    margin-top: 35px;
+                    display: flex;
+                    padding-left: 30px;
+                    width: 1017px;
+                    height: 70px;
+                    .ci-logo {
+                        height: 70px;
+                    }
+                    .ci-sub {
+                        margin-left: 22px;
+                        margin-top: 6px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .ci-text {
+                            margin-left: 12px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            span {
+                                color: #fff;
+                                font-size: 14px;
+                                display: inline-block;
+                                padding: 2px 0;
+                            }
+                        }
+                    }
+                }
+                .ft-end {
+                    color: #FFF;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    font-family: mySecondFont;
+                    margin-left: 212px;
+                }
+            }
+
+        }
+    }
+    .cl-dialog {
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        background: rgba(0,0,0,0.6);
+        z-index: 999;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        overflow-x: clip;
+        i {
+            font-size: 88px;
+            color: #fff;
+        }
+        .cd-content {
+            //height: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .img-content {
+                width: 1200px;
+                display: flex;
+                position: relative;
+                .ic-box {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    img:first-child {
+                        width: 930px;
+                    }
+                }
+                .close-btn {
+                    width: 50px;
+                }
+                .ic-role {
+                    position: absolute;
+                    right: -230px;
+                    top: -115px;
+                    img {
+                        width: 94%;
+                    }
+                }
+                //img {
+                //  width: 70%;
+                //}
+            }
+            .gift-content {
+                width: 1200px;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                .gc-body {
+                    width: 938px;
+                    height: 466px;
+                    padding: 32px 24px;
+                    box-sizing: border-box;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #BD4810;
+                    font-family: mySecondFont;
+                    .gt-left {
+                        width: 285px;
+                        height: 70px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .gt-right {
+                        width: 575px;
+                        height: 70px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+                        .copy-btn {
+                            position: absolute;
+                            right: 20px;
+                            width: 80px;
+                            height: 46px;
+                            font-size: 24px;
+                            font-weight: bold;
+                            border-radius: 10px;
+                            color: #BD4810;
+                            font-family: mySecondFont;
+                            border: 0;
+                            background: #FFE95B;
+                            box-shadow: 1px 1px 2px #F3712F;
+                            &:active {
+                                //background: #42b983;
+                                transform: scale(0.95,0.95)
+                                //box-shadow: -1px -1px 2px #F3712F;
+                            }
+                        }
+                    }
+                    .gc-title {
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                    .gc-list {
+                        width: 100%;
+                        height: 80%;
+                        overflow-y: scroll;
+                        .gc-item {
+                            display: flex;
+                            justify-content: space-around;
+                            margin-top: 10px;
+                        }
+                    }
+                    .gc-list::-webkit-scrollbar {
+                        display: none;
+                    }
+                }
+                .close-btn {
+                    width: 50px;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width: 1400px) and (max-width: 1680px){
+    .home {
+        .logo {
+            div {
+                background-size: cover;
+            }
+        }
+    }
+}
+@media screen and (min-width: 1200px) and (max-width: 1400px){
+    .home {
+        .logo {
+            img {
+                margin-right: 20px;
+                margin-top: 24px;
+            }
+        }
+    }
+}
+</style>
